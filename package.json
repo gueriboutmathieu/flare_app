@@ -2,12 +2,17 @@
     "name": "flare",
     "private": true,
     "type": "module",
+    "version": "1.0.0",
+    "engines": {
+        "node": "==22.*.*"
+    },
     "scripts": {
         "build": "nuxt build",
         "dev": "nuxt dev",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
-        "postinstall": "nuxt prepare"
+        "postinstall": "nuxt prepare",
+        "patch": "patch-package"
     },
     "dependencies": {
         "@pinia/nuxt": "^0.9.0",
@@ -21,6 +26,7 @@
     "devDependencies": {
         "@nuxtjs/tailwindcss": "^6.13.1",
         "@types/lodash.clonedeep": "^4.5.9",
+        "@types/node": "^22.14.0",
         "prettier": "^3.4.2"
     }
 }

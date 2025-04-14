@@ -3,7 +3,11 @@ import colors from "./src/assets/colors";
 export default defineNuxtConfig({
     ssr: false,
     compatibilityDate: "2024-11-01",
-    devtools: { enabled: false },
+    devtools: { enabled: true },
+    sourcemap: {
+        server: true,
+        client: true,
+    },
     app: {
         baseURL: "/",
     },
@@ -17,7 +21,17 @@ export default defineNuxtConfig({
             theme: {
                 extend: {
                     colors: colors,
+                    screens: {
+                        // TODO: add custom screens
+                    },
                 },
+            },
+        },
+    },
+    runtimeConfig: {
+        public: {
+            api: {
+                baseUrl: process.env.API_BASE_URL,
             },
         },
     },

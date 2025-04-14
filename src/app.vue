@@ -1,11 +1,8 @@
 <template>
-    <div class="h-screen w-screen bg-dark text-white overflow-hidden">
+    <div class="h-screen w-screen bg-dark text-white">
         <NuxtPage />
     </div>
 </template>
-
-<script setup lang="ts">
-</script>
 
 <style>
 body,
