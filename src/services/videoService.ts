@@ -23,9 +23,9 @@ export function createVideoService(apiService: ApiService): VideoService {
                 searchResult.thumbnail_url,
                 searchResult.duration,
                 searchResult.view_count,
-                searchResult.upload_date ? new Date(searchResult.upload_date) : null,
-                searchResult.audio_formats,
-                searchResult.video_formats,
+                null,
+                [],
+                [],
             ));
         }
         return videos;
@@ -35,21 +35,21 @@ export function createVideoService(apiService: ApiService): VideoService {
         const response = await apiService.request(RequestMethod.GET, `/videos/${videoId}/with-formats`, true, {}, {});
         const video = await response.json();
         const audioFormats: AudioFormat[] = video.audio_formats.map((format: any) => {
-            return createAudioFormat(format.id, format.format_id, format.url, format.codec, format.abr);
+            return createAudioFormat(format.id, format.url, format.codec, format.abr);
         });
         const videoFormats: VideoFormat[] = video.video_formats.map((format: any) => {
-            return createVideoFormat(format.id, format.format_id, format.url, format.codec, format.height, format.width, format.fps);
+            return createVideoFormat(format.id, format.url, format.codec, format.height, format.width, format.fps);
         });
         return createVideo(
             video.id,
             video.title,
             video.url,
-            video.channelId,
-            video.channelTitle,
-            video.thumbnailUrl,
+            video.channel_id,
+            video.channel_title,
+            video.thumbnail_url,
             video.duration,
-            video.viewCount,
-            video.uploadDate,
+            video.view_count,
+            new Date(video.upload_date),
             audioFormats,
             videoFormats,
         );

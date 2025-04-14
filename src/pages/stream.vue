@@ -4,7 +4,8 @@
             :url="stream.url"
             :duration="stream.video.duration"
             :startAt="stream.startAt"
-            :poster="stream.video.thumbnailUrl"
+            :container="stream.container"
+            :posterUrl="stream.video.thumbnailUrl"
             @seek="seek"
         />
     </div>
@@ -18,9 +19,19 @@ import { type StreamStore } from "@/stores/streamStore";
 
 const streamStore = useNuxtApp().$streamStore as StreamStore;
 
-const stream = computed(() => streamStore.state.stream as Stream);
+const stream = computed(() => {
+    const stream = streamStore.state.stream as Stream
+    console.log(stream.video.thumbnailUrl);
+    return stream;
+});
 
 async function seek(time: number) {
-    await streamStore.setStream(stream.value.video, time);
+    await streamStore.setStream(
+        stream.value.video,
+        time,
+        stream.value.container,
+        stream.value.audioUrl,
+        stream.value.videoUrl
+    );
 }
 </script>

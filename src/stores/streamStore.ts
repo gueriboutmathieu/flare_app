@@ -19,12 +19,24 @@ export const createStreamStore = defineStore("streamStore", () => {
         return Object.freeze(stateCopy);
     });
 
-    const setStream = async (video: Video, startAt: number): Promise<void> => {
+    const setStream = async (
+        video: Video,
+        startAt: number,
+        container: string,
+        audioUrl: string,
+        videoUrl: string
+    ): Promise<void> => {
         if (_state.stream !== null) {
             await streamService.endStream(_state.stream.video.id);
         }
-        const url = streamService.getStreamUrl(video.id, startAt);
-        const newStream = createStream(video, startAt, url);
+        const url = streamService.getStreamUrl(
+            video.id,
+            startAt,
+            container,
+            audioUrl,
+            videoUrl,
+        );
+        const newStream = createStream(video, startAt, url, container, audioUrl, videoUrl);
         _state.stream = newStream;
     };
 

@@ -8,6 +8,7 @@
                 ref="videoRef"
                 :poster="posterUrl"
                 class="max-w-full max-h-full bg-black flex flex-grow"
+                :type="'video/' + container"
                 autoplay
             />
 
@@ -37,12 +38,14 @@ const props = defineProps<{
     url: string;
     duration: number;
     startAt: number;
+    container: string;
     posterUrl: string;
 }>();
 const emits = defineEmits<{ seek: [number] }>();
 
 const posterUrl: string = props.posterUrl;
 const url: string = props.url;
+const container: string = props.container;
 const duration: number = props.duration;
 const startAt = ref<number>(props.startAt);
 const currentTime = ref<number>(0);

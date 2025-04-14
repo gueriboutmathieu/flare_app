@@ -28,7 +28,8 @@
         </div>
 
         <div class="
-            grid grid-cols-4 gap-10 py-10
+            grid gap-10 py-10
+            grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5
         "
         >
             <div
@@ -36,7 +37,7 @@
                 class="flex flex-col items-start p-2.5 shadow-3xl rounded-md hover:bg-darkLight hover:scale-110"
             >
                 <div class="relative cursor-pointer" @click="stream(video.id)">
-                    <img :src="video.thumbnailUrl" />
+                    <img :src="video.thumbnailUrl" class="rounded-md" />
                     <span class="absolute bottom-1 right-1 bg-dark/75 backdrop-blur-md text-white p-1 rounded-md">{{ formatDuration(video.duration) }}</span>
                 </div>
                 <span class="text-lg pt-2.5 cursor-pointer">{{ video.title }}</span>
@@ -59,7 +60,7 @@ import type { StreamStore } from "@/stores/streamStore";
 import { formatDuration } from "@/utils/formatDuration";
 import { formatNumber } from "@/utils/formatNumber";
 import { isCodecSupported } from "@/utils/isCodecSupported";
-import { getBestVideoFormats } from "@/utils/getBestVideoFormats";
+import { getSupportedVideoFormats } from "@/utils/getSupportedVideoFormats";
 
 const videoService = useNuxtApp().$videoService as VideoService;
 const streamStore = useNuxtApp().$streamStore as StreamStore;
@@ -79,8 +80,12 @@ async function search(): Promise<void> {
 
 async function stream(videoId: string): Promise<void> {
     const video = await videoService.getVideoWithFormats(videoId);
-    // console.log(getBestVideoFormats(video))
-    await streamStore.setStream(video, 0);
+    console.log(video.thumbnailUrl)
+    const supportedFormats = getSupportedVideoFormats(video);
+    const container = supportedFormats[0];
+    const audioUrl = supportedFormats[1].url;
+    const videoUrl = supportedFormats[2][supportedFormats[2].length - 1].url;
+    await streamStore.setStream(video, 0, container, audioUrl, videoUrl);
     navigateTo("/stream");
 }
 </script>

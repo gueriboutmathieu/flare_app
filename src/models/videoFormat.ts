@@ -1,6 +1,5 @@
 export type VideoFormat = {
     id: string;
-    formatId: string;
     url: string;
     codec: string;
     height: number;
@@ -10,7 +9,6 @@ export type VideoFormat = {
 
 export function createVideoFormat(
     id: string,
-    formatId: string,
     url: string,
     codec: string,
     height: number,
@@ -19,7 +17,6 @@ export function createVideoFormat(
 ): VideoFormat {
     const audioFormat: VideoFormat = {
         id,
-        formatId,
         url,
         codec,
         height,
